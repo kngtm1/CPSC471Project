@@ -15,7 +15,7 @@ def login():
 
 @auth.route('/logout')
 def logout():
-    return "<p>Logout</p>"
+    return render_template("home.html")
 
 @auth.route('/signup', methods =['GET', 'POST'])
 def signup():
@@ -34,5 +34,15 @@ def signup():
         else:
             #add user to database
             flash('Account created!', category='success')
+
+            roles = request.form.getlist('role')#to differentiate between buyer and seller
+
+            if 'buyer' in roles:
+                if request.method == 'POST':#i dont actually know what this does, probably change it since i just copied it
+                    dropoffLocation = request.form.get('dropoffLocation')
+                    cursor.execute(
+                        "INSERT INTO Customer (UserID, DropoffLocation) VALUES (?, ?)",
+                        (user_id, 'TBD Dropoff') #havent touched user_id...
+                    )
 
     return render_template("signUp.html")
