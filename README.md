@@ -6,5 +6,6 @@ pip install Flask
 
 # DB initialization
 Must go into Data\Schema.py
+
 Run the file to create the db
 
