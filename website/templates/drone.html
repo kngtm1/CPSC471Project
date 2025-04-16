@@ -43,8 +43,10 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Sign Up</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="#signup">Sign Up</a></li>
+        <li class="nav-item"><a class="nav-link" href="#login">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="#track">Track Package</a></li>
+        <li class="nav-item"><a class="nav-link" href="#dashboard">Dashboard</a></li>
       </ul>
     </div>
   </div>
@@ -53,10 +55,10 @@
 <div class="hero text-center">
   <h1>Delivering Your World By Air</h1>
   <p>Fast, eco-friendly, and precise drone delivery solutions for modern living.</p>
-  <a href="#" class="btn btn-primary btn-lg">Get Started</a>
+  <a href="#signup" class="btn btn-primary btn-lg">Get Started</a>
 </div>
 
-<div class="container my-5">
+<div class="container my-5" id="about">
   <div class="row">
     <div class="col-md-6">
       <h2>About Drone Delivery</h2>
@@ -69,6 +71,62 @@
         <li>Live delivery tracking</li>
         <li>Ultra-fast arrival times</li>
       </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container my-5" id="login">
+  <h2 class="text-center">Login</h2>
+  <form class="mx-auto" style="max-width: 400px;">
+    <div class="mb-3">
+      <label for="loginEmail" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="loginEmail" placeholder="name@example.com">
+    </div>
+    <div class="mb-3">
+      <label for="loginPassword" class="form-label">Password</label>
+      <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Login</button>
+  </form>
+</div>
+
+<div class="container my-5" id="signup">
+  <h2 class="text-center">Sign Up</h2>
+  <form class="mx-auto" style="max-width: 400px;">
+    <div class="mb-3">
+      <label for="signupName" class="form-label">Full Name</label>
+      <input type="text" class="form-control" id="signupName" placeholder="John Doe">
+    </div>
+    <div class="mb-3">
+      <label for="signupEmail" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="signupEmail" placeholder="name@example.com">
+    </div>
+    <div class="mb-3">
+      <label for="signupPassword" class="form-label">Password</label>
+      <input type="password" class="form-control" id="signupPassword" placeholder="Create a password">
+    </div>
+    <button type="submit" class="btn btn-success w-100">Create Account</button>
+  </form>
+</div>
+
+<div class="container my-5" id="track">
+  <h2 class="text-center">Track Your Package</h2>
+  <form class="mx-auto" style="max-width: 400px;">
+    <div class="mb-3">
+      <label for="trackingCode" class="form-label">Tracking Code</label>
+      <input type="text" class="form-control" id="trackingCode" placeholder="Enter your tracking code">
+    </div>
+    <button type="submit" class="btn btn-info w-100">Track Package</button>
+  </form>
+</div>
+
+<div class="container my-5" id="dashboard">
+  <h2 class="text-center">Customer Dashboard</h2>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Welcome, [User]</h5>
+      <p class="card-text">Your last delivery: <strong>Delivered</strong><br>Tracking Code: #DD123456</p>
+      <a href="#track" class="btn btn-outline-primary">Track Another Package</a>
     </div>
   </div>
 </div>
