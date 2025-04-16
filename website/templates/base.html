@@ -1,4 +1,4 @@
-<!-- This is the base template, when creating a new page, extend from this one -->
+<!
 
 <!DOCTYPE html>
 <html>
@@ -32,10 +32,9 @@
       <div class="collapse navbar-collapse" id="navbar">
         <div class="navbar-nav">
           <a class="nav-item nav-link" id="home" href="/">Home</a>
-          <a class="nav-item nav-link" id="signUp" href="/signup">Sign Up</a>
-          <a class="nav-item nav-link" id="login" href="/login">Login</a>
-          <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
-
+          <a class="nav-item nav-link" id="login" href="{{ url_for('auth.login') }}">Login</a>
+          <a class="nav-item nav-link" id="signUp" href="{{ url_for('auth.signup') }}">Sign Up</a>
+          <a class="nav-item nav-link" id="LogOut" href="{{ url_for('auth.logout') }}">Log Out</a>
         </div>
       </div>
     </nav>

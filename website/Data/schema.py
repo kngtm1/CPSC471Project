@@ -9,7 +9,7 @@ connect = sqlite3.connect("website\Data\StoreDB.db")
 connect.execute("""
     CREATE TABLE Admin (
         AdminID INTEGER PRIMARY KEY AUTOINCREMENT,
-        Names TEXT,
+        Name TEXT,
         Email TEXT NOT NULL
     );
 """)
@@ -34,7 +34,7 @@ connect.execute("""
 connect.execute("""
     CREATE TABLE Users (
         UserID INTEGER PRIMARY KEY AUTOINCREMENT,
-        Names TEXT,
+        Name TEXT,
         Email TEXT NOT NULL,
         PhoneNumber INTEGER NOT NULL
     );
@@ -43,7 +43,7 @@ connect.execute("""
 # Customer Table
 connect.execute("""
     CREATE TABLE Customer (
-        UserID INTEGER PRIMARY KEY AUTOINCREMENT,
+        UserID INTEGER PRIMARY KEY,
         DropoffLocation TEXT NOT NULL,
         FOREIGN KEY (UserID) REFERENCES Users(UserID)
     );
@@ -62,7 +62,7 @@ connect.execute("""
 # BusinessOwner Table
 connect.execute("""
     CREATE TABLE BusinessOwner (
-        UserID INTEGER PRIMARY KEY AUTOINCREMENT,
+        UserID INTEGER PRIMARY KEY,
         PickupLocation TEXT NOT NULL,
         AdminID INTEGER,
         BusinessID INTEGER,

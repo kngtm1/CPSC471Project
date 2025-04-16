@@ -3,11 +3,16 @@ from flask import Flask
 def create_app():
     app = Flask(__name__)
 
-    from .views import views
+    from .customer import customer
     from .auth import auth
+    from .business import business
+    from .frontPage import frontPage
 
-    app.register_blueprint(views, url_prefix='/')
-    app.register_blueprint(auth, url_prefix='/')
+
+    app.register_blueprint(customer, url_prefix='/customer')
+    app.register_blueprint(auth, url_prefix='/authenticate')
+    app.register_blueprint(business, url_prefix='/business')
+    app.register_blueprint(frontPage, url_prefix='/')
 
     return app
 

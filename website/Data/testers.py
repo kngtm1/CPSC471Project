@@ -5,8 +5,8 @@ connect = sqlite3.connect("website\Data\StoreDB.db")
 cursor = connect.cursor()
 
 # Insert Admins
-cursor.execute("INSERT INTO Admin (AdminID, Names, Email) VALUES (1, 'Alice Admin', 'alice@admin.com')")
-cursor.execute("INSERT INTO Admin (AdminID, Names, Email) VALUES (2, 'Bob Boss', 'bob@admin.com')")
+cursor.execute("INSERT INTO Admin (AdminID, Name, Email) VALUES (1, 'Alice Admin', 'alice@admin.com')")
+cursor.execute("INSERT INTO Admin (AdminID, Name, Email) VALUES (2, 'Bob Boss', 'bob@admin.com')")
 
 # Insert SuperAdmin and Moderator
 cursor.execute("INSERT INTO SuperAdmin (AdminID) VALUES (1)")

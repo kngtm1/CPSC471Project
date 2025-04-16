@@ -1,23 +1,34 @@
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash, session, redirect, url_for
 
 auth = Blueprint('auth',__name__)
 
 ## login page under authentication
 # Get: get url
 # Post: send info to the server
-@auth.route('/login', methods =['GET', 'POST'])
+@auth.route('/authenticate/login', methods=['GET', 'POST'])
 def login():
-    data = request.form
-    print(data)
-    return render_template("login.html", boolean = True)
+    if request.method == 'POST':
+        roles = request.form.get('role')  
+        email = request.form.get('email')
+        password = request.form.get('password')
 
+        session['user_id'] = 1  # or however you're storing it (will need sql)
+        session['role'] = roles  
 
+        # Redirect based on role
+        if roles == "customer":
+            return render_template("home.html")
+        elif roles == "businessOwner":
+            return render_template("business_Home.html")
 
-@auth.route('/logout')
+    # This is the GET method - roles isn't accessed here!
+    return render_template("login.html", boolean=True)
+
+@auth.route('/authenticate/logout')
 def logout():
-    return render_template("home.html")
+    return render_template("frontPage.html")
 
-@auth.route('/signup', methods =['GET', 'POST'])
+@auth.route('/authenticate/signup', methods =['GET', 'POST'])
 def signup():
     if request.method == 'POST':
         email = request.form.get('email')
@@ -38,14 +49,17 @@ def signup():
             #add user to database
             flash('Account created!', category='success')
 
-            roles = request.form.getlist('role')#to differentiate between buyer and seller
+            #INSERT INTO USER
 
-            if 'buyer' in roles:
-                if request.method == 'POST':#i dont actually know what this does, probably change it since i just copied it
-                    dropoffLocation = request.form.get('dropoffLocation')
-                    cursor.execute(
-                        "INSERT INTO Customer (UserID, DropoffLocation) VALUES (?, ?)",
-                        (user_id, 'TBD Dropoff') #havent touched user_id...
-                    )
-
-    return render_template("signUp.html")
+        if roles == "customer":
+            return render_template("home.html")
+        elif roles == "businessOwner":
+            return render_template("business_Home.html")
+        else:
+            flash("Invalid role selected.", category='error')
+            return render_template("signUp.html", boolean=True)
+        
+        
+     # This is the GET method - roles isn't accessed here!
+    return render_template("signUp.html", boolean=True)
+        
