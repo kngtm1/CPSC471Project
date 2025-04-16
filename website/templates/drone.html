@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drone Delivery | Drone Delivery</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #f8f9fa;
+    }
+    .navbar-brand {
+      font-weight: bold;
+      color: #0d6efd;
+    }
+    .hero {
+      padding: 100px 20px;
+      background: url('https://images.unsplash.com/photo-1581091870620-5c6a59af0ed9') center/cover no-repeat;
+      color: white;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+    }
+    .hero h1 {
+      font-size: 3rem;
+    }
+    .footer {
+      text-align: center;
+      padding: 20px;
+      background: #212529;
+      color: white;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">Drone Delivery</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#signup">Sign Up</a></li>
+        <li class="nav-item"><a class="nav-link" href="#login">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="#track">Track Package</a></li>
+        <li class="nav-item"><a class="nav-link" href="#dashboard">Dashboard</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="hero text-center">
+  <h1>Delivering Your World By Air</h1>
+  <p>Fast, eco-friendly, and precise drone delivery solutions for modern living.</p>
+  <a href="#signup" class="btn btn-primary btn-lg">Get Started</a>
+</div>
+
+<div class="container my-5" id="about">
+  <div class="row">
+    <div class="col-md-6">
+      <h2>About Drone Delivery</h2>
+      <p>We revolutionize last-mile logistics with cutting-edge autonomous drones, ensuring faster delivery, lower emissions, and real-time tracking.</p>
+    </div>
+    <div class="col-md-6">
+      <h2>Why Choose Us?</h2>
+      <ul>
+        <li>Zero-emission flights</li>
+        <li>Live delivery tracking</li>
+        <li>Ultra-fast arrival times</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container my-5" id="login">
+  <h2 class="text-center">Login</h2>
+  <form class="mx-auto" style="max-width: 400px;">
+    <div class="mb-3">
+      <label for="loginEmail" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="loginEmail" placeholder="name@example.com">
+    </div>
+    <div class="mb-3">
+      <label for="loginPassword" class="form-label">Password</label>
+      <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Login</button>
+  </form>
+</div>
+
+<div class="container my-5" id="signup">
+  <h2 class="text-center">Sign Up</h2>
+  <form class="mx-auto" style="max-width: 400px;">
+    <div class="mb-3">
+      <label for="signupName" class="form-label">Full Name</label>
+      <input type="text" class="form-control" id="signupName" placeholder="John Doe">
+    </div>
+    <div class="mb-3">
+      <label for="signupEmail" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="signupEmail" placeholder="name@example.com">
+    </div>
+    <div class="mb-3">
+      <label for="signupPassword" class="form-label">Password</label>
+      <input type="password" class="form-control" id="signupPassword" placeholder="Create a password">
+    </div>
+    <button type="submit" class="btn btn-success w-100">Create Account</button>
+  </form>
+</div>
+
+<div class="container my-5" id="track">
+  <h2 class="text-center">Track Your Package</h2>
+  <form class="mx-auto" style="max-width: 400px;">
+    <div class="mb-3">
+      <label for="trackingCode" class="form-label">Tracking Code</label>
+      <input type="text" class="form-control" id="trackingCode" placeholder="Enter your tracking code">
+    </div>
+    <button type="submit" class="btn btn-info w-100">Track Package</button>
+  </form>
+</div>
+
+<div class="container my-5" id="dashboard">
+  <h2 class="text-center">Customer Dashboard</h2>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Welcome, [User]</h5>
+      <p class="card-text">Your last delivery: <strong>Delivered</strong><br>Tracking Code: #DD123456</p>
+      <a href="#track" class="btn btn-outline-primary">Track Another Package</a>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  &copy; 2025 Drone Delivery - Drone Delivery Simplified
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
