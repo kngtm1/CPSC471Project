@@ -1,8 +1,89 @@
 {% extends "base.html" %}
-{% block title %}Home{% endblock %}
+{% block title %}Welcome{% endblock %}
 
 {% block content %}
+<div class="container mt-5">
+    <!-- Hero Section -->
+    <div class="jumbotron text-center bg-light py-5 shadow-sm">
+        <h1 class="display-4 font-weight-bold">Drone Delivery E-Commerce</h1>
+        <p class="lead mt-3">Connecting local businesses with customers through fast, drone-powered deliveries.</p>
+        <hr class="my-4">
+        <p>Experience a smarter way to shop locally — with real-time tracking, instant delivery, and eco-friendly
+            logistics.</p>
+        <div class="mt-4">
+            <a class="btn btn-primary btn-lg mx-2" href="{{ url_for('auth.login') }}">Log In</a>
+            <a class="btn btn-outline-primary btn-lg mx-2" href="{{ url_for('auth.signup') }}">Sign Up</a>
+        </div>
+    </div>
 
-<h1>This is the front page</h1>
+    <!-- Featured Products Section -->
+    <section class="mt-5">
+        <h2 class="text-center mb-4">Featured Products</h2>
+        <div class="row">
+    
+            <!-- Product Card 1 -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png" class="card-img-top" alt="Product 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Eco-Friendly Water Bottle</h5>
+                        <p class="card-text text-muted">Stay hydrated with our reusable, leak-proof water bottles.</p>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Product Card 2 -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="https://cdn-icons-png.flaticon.com/512/123/123399.png" class="card-img-top" alt="Product 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Wireless Earbuds</h5>
+                        <p class="card-text text-muted">Enjoy premium sound quality with compact, noise-canceling earbuds.
+                        </p>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Product Card 3 -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="https://cdn-icons-png.flaticon.com/512/189/189001.png" class="card-img-top" alt="Product 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Handmade Soy Candles</h5>
+                        <p class="card-text text-muted">Relax with calming scents from our artisan candle collection.</p>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    </section>
 
-{%endblock%}
+
+    <!-- About Section -->
+    <section class="mt-5">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <img src="https://cdn-icons-png.flaticon.com/512/2302/2302839.png" class="img-fluid" alt="Drone" />
+            </div>
+            <div class="col-md-6">
+                <h2 class="mb-3">What is This Platform?</h2>
+                <p class="text-muted">
+                    Our platform empowers customers to browse and purchase goods from local businesses —
+                    all while utilizing advanced drone technology for efficient and fast delivery straight from
+                    warehouse hubs.
+                </p>
+                <p class="text-muted">
+                    Businesses can register, list products, and manage orders effortlessly.
+                    Admins help oversee system flow and optimize logistics for smooth delivery operations.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-5 text-center text-muted">
+        <hr>
+        <p>© 2025 DroneShop | All rights reserved.</p>
+    </footer>
+</div>
+{% endblock %}
