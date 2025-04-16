@@ -24,7 +24,7 @@ def signup():
         firstName = request.form.get('firstName')
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
-        roles = request.form.getlist('role')#to differentiate between buyer and seller
+        roles = request.form.get('role')#to differentiate between buyer and seller
 
         if len(email) < 4:
             flash('Email must be greater than 4 characters', category='error')
@@ -38,9 +38,9 @@ def signup():
             #add user to database
             flash('Account created!', category='success')
 
-            roles = request.form.getlist('role')#to differentiate between buyer and seller
+            #roles = request.form.getlist('role')#to differentiate between buyer and seller
 
-            if 'buyer' in roles:
+            if 'customer' in roles:
                 if request.method == 'POST':#i dont actually know what this does, probably change it since i just copied it
                     dropoffLocation = request.form.get('dropoffLocation')
                     cursor.execute(
