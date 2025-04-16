@@ -48,5 +48,4 @@ def signup():
                         (user_id, 'TBD Dropoff') #havent touched user_id...
                     )
 
-
     return render_template("signUp.html")
