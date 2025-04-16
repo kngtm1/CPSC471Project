@@ -20,6 +20,8 @@ def login():
             return render_template("home.html")
         elif roles == "businessOwner":
             return render_template("business_Home.html")
+        elif roles == "admin":
+            return render_template("adminDashboard.html")
 
     # This is the GET method - roles isn't accessed here!
     return render_template("login.html", boolean=True)
@@ -52,9 +54,9 @@ def signup():
             #INSERT INTO USER
 
         if roles == "customer":
-            return render_template("home.html")
+            return render_template("login.html")
         elif roles == "businessOwner":
-            return render_template("business_Home.html")
+            return render_template("login.html")
         else:
             flash("Invalid role selected.", category='error')
             return render_template("signUp.html", boolean=True)

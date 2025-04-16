@@ -7,12 +7,14 @@ def create_app():
     from .auth import auth
     from .business import business
     from .frontPage import frontPage
-
+    from .admin import admin
 
     app.register_blueprint(customer, url_prefix='/customer')
     app.register_blueprint(auth, url_prefix='/authenticate')
     app.register_blueprint(business, url_prefix='/business')
     app.register_blueprint(frontPage, url_prefix='/')
+    app.register_blueprint(admin, url_prefix='/admin')
+
 
     return app
 
