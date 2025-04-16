@@ -24,7 +24,7 @@ def signup():
         firstName = request.form.get('firstName')
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
-        roles = request.form.getlist('role')#to differentiate between buyer and seller
+        roles = request.form.get('role')#to differentiate between buyer and seller
 
         if len(email) < 4:
             flash('Email must be greater than 4 characters', category='error')
@@ -47,6 +47,5 @@ def signup():
                         "INSERT INTO Customer (UserID, DropoffLocation) VALUES (?, ?)",
                         (user_id, 'TBD Dropoff') #havent touched user_id...
                     )
-
 
     return render_template("signUp.html")
