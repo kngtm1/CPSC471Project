@@ -24,6 +24,7 @@ def signup():
         firstName = request.form.get('firstName')
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
+        roles = request.form.getlist('role')#to differentiate between buyer and seller
 
         if len(email) < 4:
             flash('Email must be greater than 4 characters', category='error')
@@ -31,6 +32,8 @@ def signup():
             flash('First name must be greater than 2 characters', category='error')
         elif password1 != password2:
             flash('Passwords don\'t match', category='error')
+        elif not roles:
+            flash('At least one role must be selected', category='error')
         else:
             #add user to database
             flash('Account created!', category='success')
