@@ -48,21 +48,5 @@ def signup():
                         (user_id, 'TBD Dropoff') #havent touched user_id...
                     )
 
-'''
-            if 'seller' in roles:
-                if request.method == 'POST':#i dont actually know what this does, probably change it since i just copied it
-                    pickupLocation = request.form.get('pickupLocation')
-                    cursor.execute(
-                        "INSERT INTO BusinessOwner (UserID, PickupLocation) VALUES (?, ?)",
-                        (user_id, 'TBD Pickup')  # replace 'TBD' with real pickup location
-                    )
-
-                conn.commit()
-                conn.close()
-
-                flash(f"Account created as {', '.join(roles)}!", category='success')
-            except Exception as e:
-                flash(f"Error creating account: {e}", category='error')
-                '''
 
     return render_template("signUp.html")
