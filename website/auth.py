@@ -5,7 +5,7 @@ auth = Blueprint('auth',__name__)
 ## login page under authentication
 # Get: get url
 # Post: send info to the server
-@auth.route('/authenticate/login', methods=['GET', 'POST'])
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         roles = request.form.get('role')  
@@ -17,20 +17,20 @@ def login():
 
         # Redirect based on role
         if roles == "customer":
-            return render_template("home.html")
+            return redirect(url_for('customer'))
         elif roles == "businessOwner":
-            return render_template("business_Home.html")
+            return redirect(url_for('business.display'))
         elif roles == "admin":
-            return render_template("adminDashboard.html")
+            return redirect(url_for('admin.dashboard'))
 
     # This is the GET method - roles isn't accessed here!
     return render_template("login.html", boolean=True)
 
-@auth.route('/authenticate/logout')
+@auth.route('/logout')
 def logout():
     return render_template("frontPage.html")
 
-@auth.route('/authenticate/signup', methods =['GET', 'POST'])
+@auth.route('/signup', methods =['GET', 'POST'])
 def signup():
     if request.method == 'POST':
         email = request.form.get('email')

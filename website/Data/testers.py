@@ -13,8 +13,8 @@ cursor.execute("INSERT INTO SuperAdmin (AdminID) VALUES (1)")
 cursor.execute("INSERT INTO Moderator (AdminID) VALUES (2)")
 
 # Insert Users
-cursor.execute("INSERT INTO Users (UserID, Names, Email, PhoneNumber) VALUES (1, 'Charlie Customer', 'charlie@example.com', 1234567890)")
-cursor.execute("INSERT INTO Users (UserID, Names, Email, PhoneNumber) VALUES (2, 'Brenda Business', 'brenda@shop.com', 9876543210)")
+cursor.execute("INSERT INTO Users (UserID, Name, Email, PhoneNumber) VALUES (1, 'Charlie Customer', 'charlie@example.com', 1234567890)")
+cursor.execute("INSERT INTO Users (UserID, Name, Email, PhoneNumber) VALUES (2, 'Brenda Business', 'brenda@shop.com', 9876543210)")
 
 # Insert Customer and BusinessOwner
 cursor.execute("INSERT INTO Customer (UserID, DropoffLocation) VALUES (1, '123 Maple Street')")
@@ -22,7 +22,11 @@ cursor.execute("INSERT INTO Business (BusinessID, BusinessName, Description, Cat
 cursor.execute("INSERT INTO BusinessOwner (UserID, PickupLocation, AdminID, BusinessID) VALUES (2, '456 Elm Avenue', 2, 1)")
 
 # Insert Product
-cursor.execute("INSERT INTO Product (ProductID, Names, RegistrationDate, Description, AdminID, UserID, Price) VALUES (1, 'Stylish Shirt', '2025-04-16', 'A trendy cotton shirt', 2, 2, 80)")
+cursor.execute("INSERT INTO Product (BusinessID, ProductID, Name, Category, Price, Stock) VALUES (1, 1, 'Apple' , 'Produce', 2, 1)")
+cursor.execute("INSERT INTO Product (BusinessID, ProductID, Name, Category, Price, Stock) VALUES (1, 2, 'Apple' , 'Produce', 2, 1)")
+cursor.execute("INSERT INTO Product (BusinessID, ProductID, Name, Category, Price, Stock) VALUES (1, 3, 'Apple' , 'Produce', 2, 1)")
+cursor.execute("INSERT INTO Product (BusinessID, ProductID, Name, Category, Price, Stock) VALUES (1, 4, 'Apple' , 'Produce', 2, 1)")
+
 
 # Insert Order
 cursor.execute("INSERT INTO Orders (OrderID, OrderDate, OrderTotal, AdminID, UserID, Status) VALUES (1, '2025-04-16', 39, 2, 1, 'Processing')")

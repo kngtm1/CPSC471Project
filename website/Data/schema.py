@@ -75,15 +75,14 @@ connect.execute("""
 # Product Table
 connect.execute("""
     CREATE TABLE Product (
+        BusinessID INTEGER,
         ProductID INTEGER PRIMARY KEY AUTOINCREMENT,
-        Names TEXT NOT NULL,
-        RegistrationDate TEXT NOT NULL,
-        Description TEXT,
-        AdminID INTEGER,
-        UserID INTEGER,
-        Price INTEGER,
-        FOREIGN KEY (AdminID) REFERENCES Admin(AdminID),
-        FOREIGN KEY (UserID) REFERENCES Users(UserID)
+        Name TEXT NOT NULL,
+        Category TEXT NOT NULL,
+        Price INTEGER NOT NULL, 
+        Stock INTEGER NOT NULL,
+        FOREIGN KEY (BusinessID) REFERENCES Business(BusinessID)
+
     );
 """)
 
