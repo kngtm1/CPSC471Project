@@ -106,6 +106,8 @@ connect.execute("""
     CREATE TABLE OrderItem (
         OrderID INTEGER PRIMARY KEY AUTOINCREMENT,
         Quantity INTEGER NOT NULL,
+        ProductID INTEGER,
+        FOREIGN KEY (ProductID) REFERENCES Product(ProductID),
         FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
     );
 """)
