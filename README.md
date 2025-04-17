@@ -7,6 +7,7 @@ pip install Flask
 Under \Data
 
 Run the Schema.py to create the db
+
 Run the testers.py to add dummy records
 
 
