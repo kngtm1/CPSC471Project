@@ -9,6 +9,7 @@ customer = Blueprint('customer',__name__)
 def home():
     #connecting to the sql
     connection = sqlite3.connect('website/Data/StoreDB.db')
+    connection.row_factory = sqlite3.Row
     #connection.commit()
     reader = connection.cursor()
     
