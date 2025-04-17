@@ -41,13 +41,22 @@ def addProduct():
             UPDATE Product
             SET Name = ?, Category = ?, Price = ?, Stock = ?
             WHERE ProductID = ?
-        """, (productID, name, category, price, stock))
+        """, (name, category, price, stock, productID))
+        
 
     else:
         conn.execute("""
             INSERT INTO Product (Name, Category, Price, Stock)
             VALUES (?, ?, ?, ?)
         """, (name, category, price, stock))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('business.display'))
+
+@business.route('/delete/<int:productID>')
+def deleteProduct(productID):
+    conn = get_db()
+    conn.execute("DELETE FROM Product WHERE ProductID = ?", (productID,))
     conn.commit()
     conn.close()
     return redirect(url_for('business.display'))
