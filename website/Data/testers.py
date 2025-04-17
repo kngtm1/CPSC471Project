@@ -23,6 +23,7 @@ cursor.execute("INSERT OR IGNORE INTO BusinessOwner (UserID, PickupLocation, Adm
 
 # Insert Product
 cursor.execute("INSERT OR IGNORE INTO Product (ProductID, Names, RegistrationDate, Description, AdminID, UserID, Price) VALUES (1, 'Stylish Shirt', '2025-04-16', 'A trendy cotton shirt', 2, 2, 80)")
+cursor.execute("INSERT OR IGNORE INTO Product (ProductID, Names, RegistrationDate, Description, AdminID, UserID, Price) VALUES (2, 'Tacky Shirt', '2025-04-17', 'A tie-dye crochet monstrosity', 1, 1, 2000)")
 
 # Insert Order
 cursor.execute("INSERT OR IGNORE INTO Orders (OrderID, OrderDate, OrderTotal, AdminID, UserID, Status) VALUES (1, '2025-04-16', 39, 2, 1, 'Processing')")
