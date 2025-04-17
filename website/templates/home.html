@@ -3,6 +3,22 @@
 
 {% block content %} 
 
-<h1>This is the home page</h1>
+<div class="split left">
+    <div class="centered">
+        <h1>This is the customer page</h1>
+        <h1>Products</h1>
+        {% for product in products %}
+        <div class="product">
+            <h3>{{product["Names"]}}</h3>
+            <p>ID: {{ product["ProductID"] }}</p>
+            <p>Stock: {{ product["Stock"] }}</p>
+            <p>Price: ${{ product["Price"] }}</p>
+            <p>Description: {{ product["Description"] }}</p>
+            <hr>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
 
 {%endblock%}
