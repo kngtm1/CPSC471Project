@@ -35,8 +35,7 @@
         <h1>Products</h1>
         {% for product in products %}
         <div class="product">
-            <h5>{{product["Names"]}}</h5>
-            <p>ID: {{ product["ProductID"] }}</p>
+            <h5>{{product["Name"]}}</h5>
             <p>Price: ${{ product["Price"] }}</p>
             <p>Description: {{ product["Description"] }}</p>
 
