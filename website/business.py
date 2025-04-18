@@ -37,19 +37,22 @@ def addProduct():
     stock = request.form['stock']
 
     conn = get_db()
+    business_id = session.get('business_id')  # ✅ Get BusinessID from session
+
     if productID:
+        # Update existing product
         conn.execute("""
             UPDATE Product
             SET Name = ?, Category = ?, Description = ?, Price = ?, Stock = ?
             WHERE ProductID = ?
-        """, (name, category, description,  price,  stock, productID))
-        
-
+        """, (name, category, description, price, stock, productID))
     else:
+        # Insert new product with BusinessID
         conn.execute("""
-            INSERT INTO Product (Name, Category, Description, Price, Stock)
-            VALUES (?, ?, ?, ?, ?)
-        """, (name, category, description, price, stock))
+            INSERT INTO Product (BusinessID, Name, Category, Description, Price, Stock)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (business_id, name, category, description, price, stock))
+
     conn.commit()
     conn.close()
     return redirect(url_for('business.display'))
