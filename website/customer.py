@@ -4,6 +4,7 @@ import threading
 import time
 
 from flask import Blueprint, render_template
+from flask import request, redirect, url_for, session, jsonify
 
 customer = Blueprint('customer',__name__)
 
@@ -17,16 +18,13 @@ def home():
     reader = connection.cursor()
     
     #get products
-    reader.execute("SELECT ProductID, Name, Description, Price FROM Product")
+    reader.execute("SELECT ProductID, Name, Description, Price, Stock FROM Product")
     products = reader.fetchall()
     
     # get orders
     reader.execute("SELECT OrderID, OrderDate, OrderTotal, Status FROM Orders")
     orders = reader.fetchall()
-
-    # get order_item
-    reader.execute("SELECT OrderID, Quantity FROM OrderItem")
-    order_item = reader.fetchall()    
+  
     
     # Find the logged-in user's processing order
     reader.execute("SELECT OrderID FROM Orders WHERE UserID = ? AND Status = 'Processing'", (user_id,))
@@ -40,13 +38,13 @@ def home():
         order_id = order_row["OrderID"]
 
         reader.execute("""
-            SELECT P.Name, P.Price, OI.Quantity, OI.ProductID
+            SELECT P.Name AS Name, P.Price, OI.Quantity, OI.ProductID
             FROM OrderItem OI
             JOIN Product P ON OI.ProductID = P.ProductID
             WHERE OI.OrderID = ?
         """, (order_id,))
         order_items = reader.fetchall()
-    
+        
         total_price = sum(item["Price"] * item["Quantity"] for item in order_items)
         
         
@@ -76,6 +74,9 @@ def add_to_order():
 
     if result:
         order_id = result[0]
+        
+        cursor.execute("UPDATE Orders SET Status = 'Processing' WHERE OrderID = ?", (order_id,))
+        connection.commit()
     else:
         # Create new order if none exists
         cursor.execute("INSERT INTO Orders (OrderDate, OrderTotal, AdminID, UserID, Status) VALUES (date('now'), 0, 2, ?, 'Processing')", (user_id,))
@@ -129,9 +130,12 @@ def remove_from_order():
 
 @customer.route('/checkout', methods=['POST'])
 def checkout():
+    if request.headers.get("Content-Type") == "application/json":
+        request.get_json(silent=True)
     user_id = session.get('user_id')
 
     connection = sqlite3.connect('website/Data/StoreDB.db')
+    connection.row_factory = sqlite3.Row
     cursor = connection.cursor()
 
     # Get the processing order
@@ -140,18 +144,37 @@ def checkout():
 
     if result:
         order_id = result[0]
-        cursor.execute("UPDATE Orders SET Status = 'Sending' WHERE OrderID = ?", (order_id,))
+        
+        cursor.execute("UPDATE Orders SET Status = 'Processing' WHERE OrderID = ?", (order_id,))
         connection.commit()
-
-        def mark_as_delivered_later(order_id):
-            time.sleep(5)
+        
+        def mark_as_sending_then_delivered(order_id):
+            time.sleep(5)  # wait before sending
             delayed_conn = sqlite3.connect('website/Data/StoreDB.db')
             delayed_cursor = delayed_conn.cursor()
+            delayed_cursor.execute("UPDATE Orders SET Status = 'Sending' WHERE OrderID = ?", (order_id,))
+            delayed_conn.commit()
+    
+            time.sleep(5)  # wait before delivery
             delayed_cursor.execute("UPDATE Orders SET Status = 'Delivered' WHERE OrderID = ?", (order_id,))
             delayed_conn.commit()
             delayed_conn.close()
 
-        threading.Thread(target=mark_as_delivered_later, args=(order_id,)).start()
+        threading.Thread(target=mark_as_sending_then_delivered, args=(order_id,)).start()
+        connection.commit()
+        
+        cursor.execute("SELECT ProductID, Quantity FROM OrderItem WHERE OrderID = ?", (order_id,))
+        items = cursor.fetchall()
+        
+        for item in items:
+            cursor.execute("UPDATE Product SET Stock = Stock - ? WHERE ProductID = ?", (item["Quantity"], item["ProductID"]))
+        connection.commit()
+
+        cursor.execute("DELETE FROM OrderItem WHERE OrderID = ?", (order_id,))
+        connection.commit()
+
+        connection.close()
+        return jsonify({"order_id": order_id})  # Send the ID to the frontend
 
     connection.close()
-    return redirect(url_for('customer.home'))
+    return jsonify({"error": "No active order"}), 400
