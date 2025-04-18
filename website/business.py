@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, request, url_for
+from flask import Blueprint, render_template, redirect, request, url_for, session
 import sqlite3
 
 business = Blueprint('business', __name__)
@@ -13,7 +13,7 @@ def get_db():
 @business.route('/')
 def display():
     conn = get_db()
-    products = conn.execute("SELECT * FROM Product").fetchall()
+    products = conn.execute("SELECT * FROM Product WHERE BusinessID = ?", (session['business_id'],)).fetchall()    
     conn.close()
     return render_template('business_Home.html', products=products, product=None)
 
@@ -40,7 +40,7 @@ def addProduct():
     if productID:
         conn.execute("""
             UPDATE Product
-            SET Name = ?, Category = ?, , Description = ?, Price = ?, Stock = ?
+            SET Name = ?, Category = ?, Description = ?, Price = ?, Stock = ?
             WHERE ProductID = ?
         """, (name, category, description,  price,  stock, productID))
         

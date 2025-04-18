@@ -17,9 +17,6 @@ def login():
         cursor = sqlite3.connect("website/Data/StoreDB.db")
         cursor.row_factory = sqlite3.Row
         cursor = cursor.cursor()
-
-        print("hit")
-
         
 
         if role == 'customer':
@@ -54,8 +51,24 @@ def login():
             session['user_id'] = user["UserID"]
             session['role'] = role
 
-            if role == 'Business':
-                session['business_id'] = user['BusinessID']
+            if role == 'businessOwner':
+                conn = sqlite3.connect("website/Data/StoreDB.db")
+                conn.row_factory = sqlite3.Row
+                cur = conn.cursor()
+
+                cur.execute("SELECT BusinessID FROM BusinessOwner WHERE UserID = ?", (session['user_id'],))
+                result = cur.fetchone()
+
+                if result:
+                    print("hit business")
+                    session['business_id'] = result['BusinessID']
+                else:
+                    print("did not hit business")
+                    session['business_id'] = None  # or handle it however you want
+
+                cur.close()
+                conn.close()
+
             elif role == 'Admin':
                 session['admin_id'] = user['AdminID']
 
@@ -92,12 +105,18 @@ def signup():
 
         if len(email) < 4:
             flash('Email must be greater than 4 characters', category='error')
+            return render_template("signUp.html")
+
         elif len(firstName) < 2:
             flash('First name must be greater than 2 characters', category='error')
+            return render_template("signUp.html")
+
         elif password1 != password2:
             flash('Passwords don\'t match', category='error')
+            return render_template("signUp.html")
         elif not roles:
             flash('At least one role must be selected', category='error')
+            return render_template("signUp.html")
         else:
             #add user to database
             flash('Account created!', category='success')
@@ -110,9 +129,9 @@ def signup():
             return render_template("login.html")
         else:
             flash("Invalid role selected.", category='error')
-            return render_template("signUp.html", boolean=True)
+            return render_template("signUp.html")
         
         
      # This is the GET method - roles isn't accessed here!
-    return render_template("signUp.html", boolean=True)
+    return render_template("signUp.html")
         
