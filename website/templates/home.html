@@ -52,6 +52,8 @@
         {% endfor %}
     </div>
 
+
+
     <div class="split right">
 
         <h1>Orders</h1>
@@ -75,6 +77,11 @@
             <form action="{{ url_for('customer.checkout') }}" method="POST">
                 <button type="submit">Buy Now</button>
             </form>
+
+            {% if order_status %}
+                <p><strong>Status:</strong> {{ order_status }}</p>
+            {% endif %}
+
         {% else %}
             <p>No items in your current order.</p>
         {% endif %}
