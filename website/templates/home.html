@@ -35,22 +35,28 @@
         <h1>Products</h1>
         {% for product in products %}
         <div class="product">
-            <h5>{{product["Names"]}}</h5>
-            <p>ID: {{ product["ProductID"] }}</p>
+            <h5>{{product["Name"]}}</h5>
             <p>Price: ${{ product["Price"] }}</p>
+            <p>Stock: {{ product["Stock"] }}</p>
             <p>Description: {{ product["Description"] }}</p>
 
-            <form action="{{ url_for('customer.add_to_order') }}" method="POST">
-                <input type="hidden" name="product_id" value="{{ product['ProductID'] }}">
-                <input type="number" name="quantity" value="1" min="1" required>
-                <button type="submit">Add to Cart</button>
-            </form>
+            {% if product["Stock"] > 0 %}
+                <form action="{{ url_for('customer.add_to_order') }}" method="POST">
+                    <input type="hidden" name="product_id" value="{{ product['ProductID'] }}">
+                    <input type="number" name="quantity" value="1" min="1" max="{{ product['Stock'] }}" required>
+                    <button type="submit">Add to Cart</button>
+                </form>
+            {% else %}
+                <p style="color: red;">Out of Stock</p>
+            {% endif %}
             
 
             <hr>
         </div>
         {% endfor %}
     </div>
+
+
 
     <div class="split right">
 
@@ -59,8 +65,7 @@
         {% if order_items %}
             {% for item in order_items %}
             <div class="order">
-                <p><strong>{{ item["Names"] }}</strong> Amount(x{{ item["Quantity"] }})</p>
-                <p>Price: ${{ item["Price"] }} | Subtotal: ${{ item["Price"] * item["Quantity"] }}</p>
+                <p><strong>{{ item["Name"] }}</strong> Amount(x{{ item["Quantity"] }})</p>                <p>Price: ${{ item["Price"] }} | Subtotal: ${{ item["Price"] * item["Quantity"] }}</p>
 
                 <form action="{{ url_for('customer.remove_from_order') }}" method="POST">
                     <input type="hidden" name="product_id" value="{{ item['ProductID'] }}">
@@ -71,17 +76,70 @@
             {% endfor %}
 
             <h3>Total: ${{ total_price }}</h3>
+            <button type="button" onclick="checkout()">Buy Now</button>
 
-            <form action="{{ url_for('customer.checkout') }}" method="POST">
-                <button type="submit">Buy Now</button>
-            </form>
+            {% if order_status in ['Sending', 'Delivered']%}
+                <p><strong>Status:</strong> {{ order_status }}</p>
+            {% endif %}
+
         {% else %}
             <p>No items in your current order.</p>
         {% endif %}
     </div>
 </div>
 
-    
+<script>
+    function checkout() {
+        fetch("{{ url_for('customer.checkout') }}", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => { throw err });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.order_id) {
+                // Show initial status popup
+                const orderDiv = document.createElement('div');
+                orderDiv.innerHTML = `
+                    <div id="order-status-${data.order_id}" style="position:fixed; bottom:20px; right:20px; background:#f3f3f3; padding:15px; border:1px solid black; border-radius:8px;">
+                        <p><strong>Order #${data.order_id}</strong></p>
+                        <p>Status: <span id="status-${data.order_id}">Processing</span></p>
+                    </div>
+                `;
+                document.body.appendChild(orderDiv);
+
+                // Step 1: After 5s, change to Sending
+                setTimeout(() => {
+                    document.getElementById(`status-${data.order_id}`).innerText = "Sending";
+                }, 5000);
+
+                // Step 2: After 10s, change to Delivered
+                setTimeout(() => {
+                    document.getElementById(`status-${data.order_id}`).innerText = "Delivered";
+                }, 10000);
+
+                // Step 3: After 15s, remove popup and reload
+                setTimeout(() => {
+                    const elem = document.getElementById(`order-status-${data.order_id}`);
+                    if (elem) elem.remove();
+                    window.location.reload();
+                }, 15000);
+            }
+        })
+        .catch(err => {
+            alert("Error during checkout: " + (err.error || "Unknown error"));
+            console.error("Checkout error:", err);
+        });
+    }
+</script>
+
+
 
 
 {%endblock%}
