@@ -1,5 +1,7 @@
 #Customer page
 import sqlite3
+import threading
+import time
 
 from flask import Blueprint, render_template
 
@@ -32,6 +34,7 @@ def home():
 
     order_items = []
     total_price = 0
+    order_status = None
 
     if order_row:
         order_id = order_row["OrderID"]
@@ -45,9 +48,15 @@ def home():
         order_items = reader.fetchall()
     
         total_price = sum(item["Price"] * item["Quantity"] for item in order_items)
+        
+        
+        reader.execute("SELECT Status FROM Orders WHERE OrderID = ?", (order_id,))
+        status_row = reader.fetchone()
+        order_status = status_row["Status"] if status_row else None
+    
     connection.close()
     
-    return render_template("home.html", products=products, orders=orders, order_items=order_items, total_price=total_price)
+    return render_template("home.html", products=products, orders=orders, order_items=order_items, total_price=total_price, order_status=order_status)
 
 
 from flask import request, redirect, url_for, session
@@ -118,9 +127,6 @@ def remove_from_order():
 
     return redirect(url_for('customer.home'))
 
-import threading
-import time
-
 @customer.route('/checkout', methods=['POST'])
 def checkout():
     user_id = session.get('user_id')
@@ -134,21 +140,18 @@ def checkout():
 
     if result:
         order_id = result[0]
-        
-        # Update order to 'Processing' → 'Sending'
         cursor.execute("UPDATE Orders SET Status = 'Sending' WHERE OrderID = ?", (order_id,))
         connection.commit()
 
-        # Background timer to update to 'Delivered' after 5 seconds
-        def update_status_later(order_id):
+        def mark_as_delivered_later(order_id):
             time.sleep(5)
-            conn = sqlite3.connect('website/Data/StoreDB.db')
-            cur = conn.cursor()
-            cur.execute("UPDATE Orders SET Status = 'Delivered' WHERE OrderID = ?", (order_id,))
-            conn.commit()
-            conn.close()
+            delayed_conn = sqlite3.connect('website/Data/StoreDB.db')
+            delayed_cursor = delayed_conn.cursor()
+            delayed_cursor.execute("UPDATE Orders SET Status = 'Delivered' WHERE OrderID = ?", (order_id,))
+            delayed_conn.commit()
+            delayed_conn.close()
 
-        threading.Thread(target=update_status_later, args=(order_id,)).start()
+        threading.Thread(target=mark_as_delivered_later, args=(order_id,)).start()
 
     connection.close()
     return redirect(url_for('customer.home'))
