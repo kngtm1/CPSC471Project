@@ -13,17 +13,21 @@ cursor.execute("INSERT OR IGNORE INTO SuperAdmin (AdminID) VALUES (1)")
 cursor.execute("INSERT OR IGNORE INTO Moderator (AdminID) VALUES (2)")
 
 # Insert Users
-cursor.execute("INSERT OR IGNORE INTO Users (UserID, Name, Email, PhoneNumber) VALUES (1, 'Charlie Customer', 'charlie@example.com', 1234567890)")
-cursor.execute("INSERT OR IGNORE INTO Users (UserID, Name, Email, PhoneNumber) VALUES (2, 'Brenda Business', 'brenda@shop.com', 9876543210)")
+cursor.execute("INSERT OR IGNORE INTO Users (UserID, Name, Email, PhoneNumber, Password) VALUES (1, 'Charlie Customer', 'c@example.com', 1234567890, 'c')")
+cursor.execute("INSERT OR IGNORE INTO Users (UserID, Name, Email, PhoneNumber, Password) VALUES (2, 'Brenda Business', 'b@shop.com', 9876543210, 'b')")
+
 
 # Insert Customer and BusinessOwner
 cursor.execute("INSERT OR IGNORE INTO Customer (UserID, DropoffLocation) VALUES (1, '123 Maple Street')")
-cursor.execute("INSERT OR IGNORE INTO Business (BusinessID, BusinessName, Description, Category) VALUES (1, 'Brenda Boutique', 'Fashionable local shop', 'Clothing')")
+cursor.execute("INSERT OR IGNORE INTO Business (BusinessID, BusinessName, Description, Category) VALUES (1, 'Brenda Tech Shop', 'Local Goods', 'Stuff')")
 cursor.execute("INSERT OR IGNORE INTO BusinessOwner (UserID, PickupLocation, AdminID, BusinessID) VALUES (2, '456 Elm Avenue', 2, 1)")
 
+
 # Insert Product
-cursor.execute("INSERT OR IGNORE INTO Product (ProductID, Names, RegistrationDate, Description, AdminID, UserID, Price) VALUES (1, 'Stylish Shirt', '2025-04-16', 'A trendy cotton shirt', 2, 2, 80)")
-cursor.execute("INSERT OR IGNORE INTO Product (ProductID, Names, RegistrationDate, Description, AdminID, UserID, Price) VALUES (2, 'Tacky Shirt', '2025-04-17', 'A tie-dye crochet monstrosity', 1, 1, 2000)")
+cursor.execute("INSERT OR IGNORE INTO Product (BusinessID, Name, Category, Description, Price, Stock) VALUES (1, 'Eco-Friendly Water Bottle', 'Home & Kitchen', 'Reusable 750ml bottle made of stainless steel.', 1999, 150);")
+cursor.execute("INSERT OR IGNORE INTO Product (BusinessID, Name, Category, Description, Price, Stock) VALUES (1, 'Wireless Earbuds', 'Electronics', 'Bluetooth 5.0 earbuds with noise cancellation.', 5999, 75)")
+cursor.execute("INSERT OR IGNORE INTO Product (BusinessID, Name, Category, Description, Price, Stock) VALUES (2, 'Business 2 Smart LED Light Bulb', 'Home & Lighting', 'Color-changing bulb with remote app control.', 1449, 200)")
+
 
 # Insert Order
 cursor.execute("INSERT OR IGNORE INTO Orders (OrderID, OrderDate, OrderTotal, AdminID, UserID, Status) VALUES (1, '2025-04-16', 39, 2, 1, 'Processing')")

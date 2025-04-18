@@ -32,6 +32,7 @@ def addProduct():
     productID = request.form.get('productID')
     name = request.form['name']
     category = request.form['category']
+    description = request.form['description']
     price = request.form['price']
     stock = request.form['stock']
 
@@ -39,16 +40,16 @@ def addProduct():
     if productID:
         conn.execute("""
             UPDATE Product
-            SET Name = ?, Category = ?, Price = ?, Stock = ?
+            SET Name = ?, Category = ?, , Description = ?, Price = ?, Stock = ?
             WHERE ProductID = ?
-        """, (name, category, price, stock, productID))
+        """, (name, category, description,  price,  stock, productID))
         
 
     else:
         conn.execute("""
-            INSERT INTO Product (Name, Category, Price, Stock)
-            VALUES (?, ?, ?, ?)
-        """, (name, category, price, stock))
+            INSERT INTO Product (Name, Category, Description, Price, Stock)
+            VALUES (?, ?, ?, ?, ?)
+        """, (name, category, description, price, stock))
     conn.commit()
     conn.close()
     return redirect(url_for('business.display'))

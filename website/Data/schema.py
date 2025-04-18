@@ -36,7 +36,8 @@ connect.execute("""
         UserID INTEGER PRIMARY KEY AUTOINCREMENT,
         Name TEXT,
         Email TEXT NOT NULL,
-        PhoneNumber INTEGER NOT NULL
+        PhoneNumber INTEGER NOT NULL,
+        Password TEXT NOT NULL
     );
 """)
 
@@ -79,6 +80,7 @@ connect.execute("""
         ProductID INTEGER PRIMARY KEY AUTOINCREMENT,
         Name TEXT NOT NULL,
         Category TEXT NOT NULL,
+        Description TEXT NOT NULL,
         Price INTEGER NOT NULL, 
         Stock INTEGER NOT NULL,
         FOREIGN KEY (BusinessID) REFERENCES Business(BusinessID)

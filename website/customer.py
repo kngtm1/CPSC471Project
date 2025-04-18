@@ -15,7 +15,7 @@ def home():
     reader = connection.cursor()
     
     #get products
-    reader.execute("SELECT ProductID, Names, Description, RegistrationDate, Price FROM Product")
+    reader.execute("SELECT ProductID, Name, Description, Price FROM Product")
     products = reader.fetchall()
     
     # get orders
@@ -37,7 +37,7 @@ def home():
         order_id = order_row["OrderID"]
 
         reader.execute("""
-            SELECT P.Names, P.Price, OI.Quantity, OI.ProductID
+            SELECT P.Name, P.Price, OI.Quantity, OI.ProductID
             FROM OrderItem OI
             JOIN Product P ON OI.ProductID = P.ProductID
             WHERE OI.OrderID = ?
