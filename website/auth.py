@@ -18,6 +18,7 @@ def login():
         # Redirect based on role
         if roles == "customer":
             return redirect(url_for('customer'))
+            return redirect(url_for('customer.home'))
         elif roles == "businessOwner":
             return redirect(url_for('business.display'))
         elif roles == "admin":

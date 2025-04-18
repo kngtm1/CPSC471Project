@@ -1,11 +1,13 @@
 # Start Up
-Must install flask:
-Run the following in the command line 
+Must install flask and run the following in the command line 
 
 pip install Flask
 
 # DB initialization
-Must go into Data\Schema.py
+Under \Data
 
-Run the file to create the db
+Run the Schema.py to create the db
+
+Run the testers.py to add dummy records
+
 

@@ -3,6 +3,85 @@
 
 {% block content %} 
 
-<h1>This is the home page</h1>
+<style>
+    .split {
+      height: 100%;
+      position: relative;
+      padding: 20px;
+    }
+  
+    .left {
+      width: 65%;
+      float: left;
+    }
+  
+    .right {
+      width: 30%;
+      float: right;
+      border-left: 1px solid #ccc;
+    }
+  
+    .clearfix::after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+  </style>
+
+<h2>This is the customer page</h2>
+
+<div class="clearfix">
+    <div class="split left">
+        <h1>Products</h1>
+        {% for product in products %}
+        <div class="product">
+            <h5>{{product["Names"]}}</h5>
+            <p>ID: {{ product["ProductID"] }}</p>
+            <p>Price: ${{ product["Price"] }}</p>
+            <p>Description: {{ product["Description"] }}</p>
+
+            <form action="{{ url_for('customer.add_to_order') }}" method="POST">
+                <input type="hidden" name="product_id" value="{{ product['ProductID'] }}">
+                <input type="number" name="quantity" value="1" min="1" required>
+                <button type="submit">Add to Cart</button>
+            </form>
+            
+
+            <hr>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="split right">
+
+        <h1>Orders</h1>
+
+        {% if order_items %}
+            {% for item in order_items %}
+            <div class="order">
+                <p><strong>{{ item["Names"] }}</strong> Amount(x{{ item["Quantity"] }})</p>
+                <p>Price: ${{ item["Price"] }} | Subtotal: ${{ item["Price"] * item["Quantity"] }}</p>
+
+                <form action="{{ url_for('customer.remove_from_order') }}" method="POST">
+                    <input type="hidden" name="product_id" value="{{ item['ProductID'] }}">
+                    <button type="submit">Remove</button>
+                </form>
+                <hr>
+            </div>
+            {% endfor %}
+
+            <h3>Total: ${{ total_price }}</h3>
+
+            <form action="{{ url_for('customer.checkout') }}" method="POST">
+                <button type="submit">Buy Now</button>
+            </form>
+        {% else %}
+            <p>No items in your current order.</p>
+        {% endif %}
+    </div>
+</div>
+
+    
+
 
 {%endblock%}
