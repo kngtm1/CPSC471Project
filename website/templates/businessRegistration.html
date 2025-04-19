@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Sign Up{% endblock %}
+
+{% block content %} 
+<br/>
+<form method="POST">
+    <h3 align="center" >Business Registration</h3>
+    <input type="hidden" name="user_id" value="{{ user_id }}">
+    <input type="hidden" name="business_id" value="{{ business_id }}">
+    <div class="form-group">
+        <label for="email">Business Name</label>
+        <input 
+            type="text" 
+            class="form-control" 
+            id="businessName" 
+            name="businessName"  
+            placeholder="Enter Business Name"
+            />
+    </div>
+    <div class="form-group">
+        <label for="firstName">Category</label>
+        <input 
+            type="text" 
+            class="form-control" 
+            id="category" 
+            name="category"  
+            placeholder="Enter Business Category"
+            />
+    </div>
+    <div class="form-group">
+        <label for="firstName">Description</label>
+        <input 
+            type="text" 
+            class="form-control" 
+            id="description" 
+            name="description"  
+            placeholder="Enter Business Description"
+            />
+    </div>
+    <br/>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
+{%endblock%}

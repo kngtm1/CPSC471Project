@@ -103,15 +103,15 @@ def signup():
         password2 = request.form.get('password2')
         roles = request.form.get('role')#to differentiate between buyer and seller
 
-        if len(email) < 4:
+        if not email or len(email) < 4:
             flash('Email must be greater than 4 characters', category='error')
             return render_template("signUp.html")
 
-        elif len(firstName) < 2:
+        elif not firstName or len(firstName) < 2:
             flash('First name must be greater than 2 characters', category='error')
             return render_template("signUp.html")
 
-        elif password1 != password2:
+        elif not password1 or password1 != password2:
             flash('Passwords don\'t match', category='error')
             return render_template("signUp.html")
         elif not roles:
@@ -121,12 +121,44 @@ def signup():
             #add user to database
             flash('Account created!', category='success')
 
-            #INSERT INTO USER
+        conn = sqlite3.connect("website/Data/StoreDB.db")
+        conn.row_factory = sqlite3.Row
+        cur = conn.cursor()
+
+        try:
+            # Insert user
+            cur.execute("""
+                INSERT INTO Users (Name, Email, PhoneNumber, Password)
+                VALUES (?, ?, ?, ?)
+            """, (firstName, email, 1234567890, password1))  # Replace dummy phone # as needed
+            user_id = cur.lastrowid
+
+            if roles == "customer":
+                cur.execute("""
+                    INSERT INTO Customer (UserID, DropoffLocation)
+                    VALUES (?, ?)
+                """, (user_id, "Default Dropoff"))  # You can replace with form value
+
+            elif roles == "businessOwner":
+                conn.commit()
+                cur.close()
+                conn.close()
+                return redirect(url_for('auth.businessRegistration', user_id=user_id))
+
+            conn.commit()
+            flash("Account created successfully!", category='success')
+
+        except sqlite3.IntegrityError as e:
+            flash("Error: Email already exists or invalid data.", category='danger')
+            print(e)
+            conn.rollback()
+            return render_template("signUp.html")
+
 
         if roles == "customer":
-            return render_template("login.html")
+            return redirect(url_for('auth.login'))
         elif roles == "businessOwner":
-            return render_template("login.html")
+            return redirect(url_for('auth.businessRegistration', user_id=user_id))
         else:
             flash("Invalid role selected.", category='error')
             return render_template("signUp.html")
@@ -134,4 +166,43 @@ def signup():
         
      # This is the GET method - roles isn't accessed here!
     return render_template("signUp.html")
+
+@auth.route('/businessRegistration', methods=['GET', 'POST'])
+def businessRegistration():
+    user_id = request.args.get('user_id') if request.method == 'GET' else request.form.get('user_id')
+
+    if request.method == 'POST':
+        businessName = request.form.get('businessName')
+        category = request.form.get('category')
+        description = request.form.get('description')
+
+        conn = sqlite3.connect("website/Data/StoreDB.db")
+        conn.row_factory = sqlite3.Row
+        cur = conn.cursor()
+
+        cur.execute("""
+            INSERT INTO Business (BusinessName, Description, Category)
+            VALUES (?, ?, ?)
+        """, (businessName, description, category))
+        business_id = cur.lastrowid
+
+        cur.execute("""
+            INSERT INTO BusinessOwner (UserID, PickupLocation, AdminID, BusinessID)
+            VALUES (?, ?, ?, ?)
+        """, (user_id, "Default Pickup", 1, business_id))
+
+        conn.commit()
+        cur.close()
+        conn.close()
+        flash("Business registration complete. You can now log in.", "success")
+
+        session['user_id'] = user_id
+        session['business_id'] = business_id
+        session['role'] = 'businessOwner'
+
+        return redirect(url_for('auth.login'))
+
+    return render_template("businessRegistration.html", user_id=user_id)
+
+
         
