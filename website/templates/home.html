@@ -4,6 +4,7 @@
 
 {% block content %} 
 
+<!-- Splitting the screen into two columns for styling -->
 <style>
     .split {
       height: 100%;
@@ -32,6 +33,7 @@
 <h2>This is the customer page</h2>
 
 <div class="clearfix">
+    <!-- Left side: product catalog -->
     <div class="split left">
         <h1>Products</h1>
         {% for product in products %}
@@ -41,9 +43,11 @@
             <p>Stock: {{ product["Stock"] }}</p>
             <p>Description: {{ product["Description"] }}</p>
 
+            <!-- Only show add to cart form if product is in stock -->
             {% if product["Stock"] > 0 %}
                 <form action="{{ url_for('customer.add_to_order') }}" method="POST">
                     <input type="hidden" name="product_id" value="{{ product['ProductID'] }}">
+                    <!-- Limit quantity input to available stock -->
                     <input type="number" name="quantity" value="1" min="1" max="{{ product['Stock'] }}" required>
                     <button type="submit">Add to Cart</button>
                 </form>
@@ -60,6 +64,7 @@
 
 
     <div class="split right">
+        <!-- Right side: current order summary -->
 
         <h1>Orders</h1>
 
@@ -68,6 +73,7 @@
             <div class="order">
                 <p><strong>{{ item["Name"] }}</strong> Amount(x{{ item["Quantity"] }})</p>                <p>Price: ${{ item["Price"] }} | Subtotal: ${{ item["Price"] * item["Quantity"] }}</p>
 
+                <!-- Remove item from order -->
                 <form action="{{ url_for('customer.remove_from_order') }}" method="POST">
                     <input type="hidden" name="product_id" value="{{ item['ProductID'] }}">
                     <button type="submit">Remove</button>
@@ -76,9 +82,11 @@
             </div>
             {% endfor %}
 
+            <!-- Total price and Buy Now button -->
             <h3>Total: ${{ total_price }}</h3>
             <button type="button" onclick="checkout()">Buy Now</button>
 
+            <!-- Show status message if applicable -->
             {% if order_status in ['Sending', 'Delivered']%}
                 <p><strong>Status:</strong> {{ order_status }}</p>
             {% endif %}
@@ -89,6 +97,7 @@
     </div>
 </div>
 
+<!-- JavaScript to handle checkout status notifications -->
 <script>
     function checkout() {
         fetch("{{ url_for('customer.checkout') }}", {
@@ -115,17 +124,17 @@
                 `;
                 document.body.appendChild(orderDiv);
 
-                // Step 1: After 5s, change to Sending
+                //After 5s, change to Sending
                 setTimeout(() => {
                     document.getElementById(`status-${data.order_id}`).innerText = "Sending";
                 }, 5000);
 
-                // Step 2: After 10s, change to Delivered
+                //After 10s, change to Delivered
                 setTimeout(() => {
                     document.getElementById(`status-${data.order_id}`).innerText = "Delivered";
                 }, 10000);
 
-                // Step 3: After 15s, remove popup and reload
+                //After 15s, remove popup and reload
                 setTimeout(() => {
                     const elem = document.getElementById(`order-status-${data.order_id}`);
                     if (elem) elem.remove();
@@ -134,6 +143,7 @@
             }
         })
         .catch(err => {
+            // Error handling
             alert("Error during checkout: " + (err.error || "Unknown error"));
             console.error("Checkout error:", err);
         });
