@@ -40,12 +40,11 @@ def login():
             """, (email, password)).fetchone()
 
         elif role == 'admin':
-            user = cursor.execute("""
-                SELECT Users.UserID, Users.Name, Admin.AdminID 
-                FROM Users
-                JOIN Admin ON Users.UserID = Admin.UserID
-                WHERE Users.Email = ? AND Users.Password = ?
-            """, (email, password)).fetchone()
+            cursor.execute("SELECT * FROM Admin WHERE Email = ? AND Password = ?", (email, password))
+            user = cursor.fetchone()
+            if user:
+                flash('Admin login successful!', 'success')
+                return redirect(url_for('admin.admin_dashboard'))  # Ensure this route exists
 
         if user:
             session['user_id'] = user["UserID"]
@@ -205,4 +204,4 @@ def businessRegistration():
     return render_template("businessRegistration.html", user_id=user_id)
 
 
-        
+
