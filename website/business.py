@@ -22,7 +22,7 @@ def display():
 def editProduct(productID):
     conn = get_db()
     product = conn.execute("SELECT * FROM Product WHERE ProductID = ?", (productID,)).fetchone()
-    products = conn.execute("SELECT * FROM Product").fetchall()
+    products = conn.execute("SELECT * FROM Product WHERE BusinessID = ?", (session['business_id'],)).fetchall()    
     conn.close()
     return render_template("business_Home.html", products=products, product=product)
 
