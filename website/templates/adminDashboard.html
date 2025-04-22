@@ -19,6 +19,9 @@
         <button onclick="showSettings()" style="background-color: #f44336; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
             Settings
         </button>
+        <button onclick="showBusinesses()" style="background-color: #FF9800; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+            Approved Businesses
+        </button>
     </div>
 
     <!-- Hidden user list -->
@@ -73,6 +76,17 @@
             <li style="padding: 10px; border-bottom: 1px solid #ddd; cursor: pointer;">Notification Preferences</li>
         </ul>
     </div>
+
+    <!-- Hidden businesses list -->
+    <div id="businessList" style="display: none; margin-top: 30px; text-align: center;">
+        <h2 style="color: #FF9800;">Approved Businesses</h2>
+        <ul style="list-style-type: none; padding: 0; font-size: 16px;">
+            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Business A - Approved</li>
+            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Business B - Approved</li>
+            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Business C - Approved</li>
+            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Business D - Approved</li>
+        </ul>
+    </div>
 </div>
 
 <script>
@@ -89,6 +103,11 @@
     function showSettings() {
         const settingsList = document.getElementById('settingsList');
         settingsList.style.display = settingsList.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function showBusinesses() {
+        const businessList = document.getElementById('businessList');
+        businessList.style.display = businessList.style.display === 'none' ? 'block' : 'none';
     }
 </script>
 
