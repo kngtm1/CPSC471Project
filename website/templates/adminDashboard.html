@@ -1,10 +1,25 @@
 <!-- This is the admin dashboard template -->
 
 {% extends "base.html" %}
-{% block title %}Home{% endblock %}
+{% block title %}Admin Dashboard{% endblock %}
 
 {% block content %}
 
-<h1>This is the admin page</h1>
+<div style="font-family: Arial, sans-serif; margin: 20px;">
+    <h1 style="color: #4CAF50; text-align: center;">Admin Dashboard</h1>
+    <p style="text-align: center; color: #555;">Welcome to the admin page. Manage content and settings here.</p>
 
-{%endblock%}
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
+        <button style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+            Manage Users
+        </button>
+        <button style="background-color: #2196F3; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+            View Reports
+        </button>
+        <button style="background-color: #f44336; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+            Settings
+        </button>
+    </div>
+</div>
+
+{% endblock %}
