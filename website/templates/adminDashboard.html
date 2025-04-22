@@ -10,16 +10,86 @@
     <p style="text-align: center; color: #555;">Welcome to the admin page. Manage content and settings here.</p>
 
     <div style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
-        <button style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+        <button onclick="showUsers()" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
             Manage Users
         </button>
-        <button style="background-color: #2196F3; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+        <button onclick="showInventory()" style="background-color: #2196F3; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
             View Reports
         </button>
-        <button style="background-color: #f44336; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+        <button onclick="showSettings()" style="background-color: #f44336; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
             Settings
         </button>
     </div>
+
+    <!-- Hidden user list -->
+    <div id="userList" style="display: none; margin-top: 30px; text-align: center;">
+        <h2 style="color: #4CAF50;">User List</h2>
+        <table style="margin: 0 auto; border-collapse: collapse; width: 80%; font-size: 16px;">
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th style="border: 1px solid #ddd; padding: 8px;">Name</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Email</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">John Doe</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">john.doe@example.com</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">Admin</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">Jane Smith</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">jane.smith@example.com</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">Editor</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">Alice Johnson</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">alice.johnson@example.com</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">Viewer</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Hidden inventory list -->
+    <div id="inventoryList" style="display: none; margin-top: 30px; text-align: center;">
+        <h2 style="color: #2196F3;">Inventory List</h2>
+        <ul style="list-style-type: none; padding: 0; font-size: 16px;">
+            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Water Bottles  In-Stock: 150</li>
+            <li style="padding: 10px; border-bottom: 1px solid #ddd;">EarPods  In-Stock: 75</li>
+            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Laptops  In-Stock: 200</li>
+            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Notebooks  In-Stock: 120</li>
+        </ul>
+    </div>
+
+    <!-- Hidden settings list -->
+    <div id="settingsList" style="display: none; margin-top: 30px; text-align: center;">
+        <h2 style="color: #f44336;">Settings</h2>
+        <ul style="list-style-type: none; padding: 0; font-size: 16px;">
+            <li style="padding: 10px; border-bottom: 1px solid #ddd; cursor: pointer;">Change Password</li>
+            <li style="padding: 10px; border-bottom: 1px solid #ddd; cursor: pointer;">Update Profile</li>
+            <li style="padding: 10px; border-bottom: 1px solid #ddd; cursor: pointer;">Delete Account</li>
+            <li style="padding: 10px; border-bottom: 1px solid #ddd; cursor: pointer;">Notification Preferences</li>
+        </ul>
+    </div>
 </div>
+
+<script>
+    function showUsers() {
+        const userList = document.getElementById('userList');
+        userList.style.display = userList.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function showInventory() {
+        const inventoryList = document.getElementById('inventoryList');
+        inventoryList.style.display = inventoryList.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function showSettings() {
+        const settingsList = document.getElementById('settingsList');
+        settingsList.style.display = settingsList.style.display === 'none' ? 'block' : 'none';
+    }
+</script>
 
 {% endblock %}
