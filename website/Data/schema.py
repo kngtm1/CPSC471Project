@@ -10,7 +10,8 @@ connect.execute("""
     CREATE TABLE Admin (
         AdminID INTEGER PRIMARY KEY AUTOINCREMENT,
         Name TEXT,
-        Email TEXT NOT NULL
+        Email TEXT NOT NULL, 
+        Password TEXT
     );
 """)
 
