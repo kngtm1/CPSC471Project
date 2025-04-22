@@ -5,8 +5,8 @@ connect = sqlite3.connect("website/Data/StoreDB.db")
 cursor = connect.cursor()
 
 # Insert Admins
-cursor.execute("INSERT OR IGNORE INTO Admin (AdminID, Name, Email) VALUES (1, 'Alice Admin', 'alice@admin.com')")
-cursor.execute("INSERT OR IGNORE INTO Admin (AdminID, Name, Email) VALUES (2, 'Bob Boss', 'bob@admin.com')")
+cursor.execute("INSERT OR IGNORE INTO Admin (AdminID, Name, Email, Password) VALUES (1, 'Alice Admin', 'alice@admin.com', 'adminpassword')")
+cursor.execute("INSERT OR IGNORE INTO Admin (AdminID, Name, Email, Password) VALUES (2, 'Bob Boss', 'bob@admin.com', 'adminpassword')")
 
 # Insert SuperAdmin and Moderator
 cursor.execute("INSERT OR IGNORE INTO SuperAdmin (AdminID) VALUES (1)")
