@@ -22,6 +22,10 @@
         <button onclick="showBusinesses()" style="background-color: #FF9800; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
             Approved Businesses
         </button>
+        <!-- New button for viewing drones -->
+        <button onclick="showDrones()" style="background-color: #673AB7; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+            View Drones
+        </button>
     </div>
 
     <!-- Hidden user list -->
@@ -81,10 +85,21 @@
     <div id="businessList" style="display: none; margin-top: 30px; text-align: center;">
         <h2 style="color: #FF9800;">Approved Businesses</h2>
         <ul style="list-style-type: none; padding: 0; font-size: 16px;">
-            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Business A - Approved</li>
-            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Business B - Approved</li>
-            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Business C - Approved</li>
-            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Business D - Approved</li>
+            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Business Water Bottles - Approved</li>
+            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Business Wireless Earpods - Approved</li>
+            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Business C - Pending</li>
+            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Business D - Pending</li>
+        </ul>
+    </div>
+
+    <!-- Hidden drone list -->
+    <div id="droneList" style="display: none; margin-top: 30px; text-align: center;">
+        <h2 style="color: #673AB7;">Drone List</h2>
+        <ul style="list-style-type: none; padding: 0; font-size: 16px;">
+            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Drone for Customer - Location: Warehouse</li>
+            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Drone B - Location: In Transit</li>
+            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Drone C - Location: Maintenance</li>
+            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Drone D - Location: Delivery Point</li>
         </ul>
     </div>
 </div>
@@ -109,6 +124,12 @@
         const businessList = document.getElementById('businessList');
         businessList.style.display = businessList.style.display === 'none' ? 'block' : 'none';
     }
+
+    function showDrones() {
+        const droneList = document.getElementById('droneList');
+        droneList.style.display = droneList.style.display === 'none' ? 'block' : 'none';
+    }
 </script>
 
 {% endblock %}
+

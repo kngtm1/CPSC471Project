@@ -24,9 +24,9 @@ cursor.execute("INSERT OR IGNORE INTO BusinessOwner (UserID, PickupLocation, Adm
 
 
 # Insert Product
-cursor.execute("INSERT OR IGNORE INTO Product (BusinessID, Name, Category, Description, Price, Stock) VALUES (1, 'Eco-Friendly Water Bottle', 'Home & Kitchen', 'Reusable 750ml bottle made of stainless steel.', 1999, 150);")
-cursor.execute("INSERT OR IGNORE INTO Product (BusinessID, Name, Category, Description, Price, Stock) VALUES (1, 'Wireless Earbuds', 'Electronics', 'Bluetooth 5.0 earbuds with noise cancellation.', 5999, 75)")
-cursor.execute("INSERT OR IGNORE INTO Product (BusinessID, Name, Category, Description, Price, Stock) VALUES (2, 'Business 2 Smart LED Light Bulb', 'Home & Lighting', 'Color-changing bulb with remote app control.', 1449, 200)")
+cursor.execute("INSERT OR IGNORE INTO Product (BusinessID, Name, Category, Description, Price, Stock) VALUES (1, 'Eco-Friendly Water Bottle', 'Home & Kitchen', 'Reusable 750ml bottle made of stainless steel.', 19.99, 150);")
+cursor.execute("INSERT OR IGNORE INTO Product (BusinessID, Name, Category, Description, Price, Stock) VALUES (1, 'Wireless Earbuds', 'Electronics', 'Bluetooth 5.0 earbuds with noise cancellation.', 59.99, 75)")
+cursor.execute("INSERT OR IGNORE INTO Product (BusinessID, Name, Category, Description, Price, Stock) VALUES (1, 'Business 2 Smart LED Light Bulb', 'Home & Lighting', 'Color-changing bulb with remote app control.', 14.49, 200)")
 
 
 # Insert Order
