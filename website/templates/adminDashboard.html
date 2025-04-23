@@ -45,10 +45,10 @@
             <tbody>
                 {% for user in users %}
                 <tr>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{{ user.UserID }}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{{ user.Name }}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{{ user.Email }}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{{ user.PhoneNumber }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ user["UserID"] }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ user["Name"] }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ user["Email"] }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ user["PhoneNumber"] }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -104,8 +104,8 @@
                 {% for business in businesses %}
                 <tr>
                     <td style="border: 1px solid #ddd; padding: 8px;">{{ business['BusinessID'] }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ business['BusinessName'] }}</td>
                     <td style="border: 1px solid #ddd; padding: 8px;">{{ business['Name'] }}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{{ business['Owner'] }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -119,16 +119,16 @@
             <thead>
                 <tr style="background-color: #f2f2f2;">
                     <th style="border: 1px solid #ddd; padding: 8px;">Drone ID</th>
-                    <th style="border: 1px solid #ddd; padding: 8px;">Drone Name</th>
-                    <th style="border: 1px solid #ddd; padding: 8px;">Location</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Closest Warehouse</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Staus</th>
                 </tr>
             </thead>
             <tbody>
                 {% for drone in drones %}
                 <tr>
                     <td style="border: 1px solid #ddd; padding: 8px;">{{ drone['DroneID'] }}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{{ drone['Name'] }}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{{ drone['Location'] }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ drone['ClosestWarehouse'] }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ drone['Status'] }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
