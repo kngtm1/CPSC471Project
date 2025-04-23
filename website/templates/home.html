@@ -44,12 +44,11 @@
 
             <!-- Only show add to cart form if product is in stock -->
             {% if product["Stock"] > 0 %}
-                <form action="{{ url_for('customer.add_to_order') }}" method="POST">
-                    <input type="hidden" name="product_id" value="{{ product['ProductID'] }}">
-                    <!-- Limit quantity input to available stock -->
+                <form onsubmit="addToCart(event, {{ product['ProductID'] }})">
                     <input type="number" name="quantity" value="1" min="1" max="{{ product['Stock'] }}" required>
                     <button type="submit">Add to Cart</button>
                 </form>
+            
             {% else %}
                 <p style="color: red;">Out of Stock</p>
             {% endif %}
@@ -96,6 +95,7 @@
     </div>
 </div>
 
+
 <!-- JavaScript to handle checkout status notifications -->
 <script>
     function checkout() {
@@ -105,12 +105,14 @@
                 'Content-Type': 'application/json'
             },
         })
-        .then(response => {
+        .then(async response => {
+            const data = await response.json();
             if (!response.ok) {
-                return response.json().then(err => { throw err });
+                throw new Error(data.message || "Something went wrong");
             }
-            return response.json();
+            return data;
         })
+        
         .then(data => {
             if (data.order_id) {
                 // Show initial status popup
@@ -149,6 +151,44 @@
     }
 </script>
 
+<script>
+    function addToCart(event, productId) {
+        event.preventDefault(); // THIS IS ESSENTIAL
+
+        const form = event.target;
+        const quantity = form.querySelector('input[name="quantity"]').value;
+
+        fetch("{{ url_for('customer.add_to_order') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                product_id: productId,
+                quantity: quantity
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => { throw err });
+            }
+            return response.json();
+        })
+        .then(data => {
+            window.location.reload(); // Success
+        })
+        .catch(err => {
+            if (err && err.message) {
+                alert(err.message);
+            } else if (typeof err === 'string') {
+                alert(err);
+            } else {
+                alert("Something went wrong.");
+            }
+        });
+        
+    }
+</script>
 
 
 

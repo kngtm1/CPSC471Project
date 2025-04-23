@@ -67,14 +67,20 @@ from flask import request, redirect, url_for, session
 #Add to Order
 @customer.route('/add_to_order', methods=['POST'])
 def add_to_order():
+    if request.is_json:
+        data = request.get_json()
+        product_id = int(data.get('product_id'))
+        quantity = int(data.get('quantity'))
+    else:
+        product_id = int(request.form.get('product_id'))
+        quantity = int(request.form.get('quantity'))
+
     #getting required information
-    product_id = request.form.get('product_id')
-    quantity = request.form.get('quantity')
     user_id = session.get('user_id')  # assuming this is set during login
 
     connection = sqlite3.connect('website/Data/StoreDB.db')
     cursor = connection.cursor()
-
+    
     #Check if a 'Proccessing' order already exists
     cursor.execute("SELECT OrderID FROM Orders WHERE UserID = ? AND Status = 'Processing'", (user_id,))
     result = cursor.fetchone()
@@ -92,17 +98,39 @@ def add_to_order():
     #Check if the item is already in the cart (OrderItem)
     cursor.execute("SELECT Quantity FROM OrderItem WHERE OrderID = ? AND ProductID = ?", (order_id, product_id))
     existing = cursor.fetchone()
+    
+    # Get current stock from Product
+    try:
+        cursor.execute("SELECT Stock FROM Product WHERE ProductID = ?", (product_id,))
+        stock_row = cursor.fetchone()
+        if not stock_row:
+            connection.close()
+            return jsonify({"message": "Product not found"}), 404
+
+        available_stock = stock_row[0]
+    except sqlite3.OperationalError as e:
+        connection.close()
+        return jsonify({"message": f"Database error: {e}"}), 500
+
 
     if existing:
-        # If it exists, update the quantity
         new_quantity = existing[0] + int(quantity)
+    else:
+        new_quantity = int(quantity)
+    
+    #Add this check right here
+    if new_quantity > available_stock:
+        connection.close()
+        return jsonify({"message": "Cannot add more than available stock"}), 400
+
+    # Only run insert or update if valid
+    if existing:
         cursor.execute("""
             UPDATE OrderItem
             SET Quantity = ?
             WHERE OrderID = ? AND ProductID = ?
         """, (new_quantity, order_id, product_id))
     else:
-        # Otherwise, insert a new item
         cursor.execute("""
             INSERT INTO OrderItem (OrderID, ProductID, Quantity)
             VALUES (?, ?, ?)
@@ -111,8 +139,7 @@ def add_to_order():
     connection.commit()
     connection.close()
 
-    #redirect so we dont get duplicates
-    return redirect(url_for('customer.home'))
+    return jsonify({"message": "Item added to cart"}), 200
 
 
 #Remove from Order
