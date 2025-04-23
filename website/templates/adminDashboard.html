@@ -5,6 +5,8 @@
 
 {% block content %}
 
+
+
 <div style="font-family: Arial, sans-serif; margin: 20px;">
     <h1 style="color: #4CAF50; text-align: center;">Admin Dashboard</h1>
     <p style="text-align: center; color: #555;">Welcome to the admin page. Manage content and settings here.</p>
@@ -30,31 +32,25 @@
 
     <!-- Hidden user list -->
     <div id="userList" style="display: none; margin-top: 30px; text-align: center;">
-        <h2 style="color: #4CAF50;">User List</h2>
-        <table style="margin: 0 auto; border-collapse: collapse; width: 80%; font-size: 16px;">
+        <h2>Registered Users</h2>
+        <table border="1" style="margin: 0 auto; border-collapse: collapse; width: 80%; font-size: 16px;">
             <thead>
                 <tr style="background-color: #f2f2f2;">
+                    <th style="border: 1px solid #ddd; padding: 8px;">User ID</th>
                     <th style="border: 1px solid #ddd; padding: 8px;">Name</th>
                     <th style="border: 1px solid #ddd; padding: 8px;">Email</th>
-                    <th style="border: 1px solid #ddd; padding: 8px;">Role</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Phone Number</th>
                 </tr>
             </thead>
             <tbody>
+                {% for user in users %}
                 <tr>
-                    <td style="border: 1px solid #ddd; padding: 8px;">John Doe</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">john.doe@example.com</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">Admin</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ user.UserID }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ user.Name }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ user.Email }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ user.PhoneNumber }}</td>
                 </tr>
-                <tr>
-                    <td style="border: 1px solid #ddd; padding: 8px;">Jane Smith</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">jane.smith@example.com</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">Editor</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid #ddd; padding: 8px;">Alice Johnson</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">alice.johnson@example.com</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">Viewer</td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
@@ -62,12 +58,24 @@
     <!-- Hidden inventory list -->
     <div id="inventoryList" style="display: none; margin-top: 30px; text-align: center;">
         <h2 style="color: #2196F3;">Inventory List</h2>
-        <ul style="list-style-type: none; padding: 0; font-size: 16px;">
-            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Water Bottles  In-Stock: 150</li>
-            <li style="padding: 10px; border-bottom: 1px solid #ddd;">EarPods  In-Stock: 75</li>
-            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Laptops  In-Stock: 200</li>
-            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Notebooks  In-Stock: 120</li>
-        </ul>
+        <table border="1" style="margin: 0 auto; border-collapse: collapse; width: 80%; font-size: 16px;">
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th style="border: 1px solid #ddd; padding: 8px;">Product ID</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Product Name</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Stock</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in inventory %}
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ item['ProductID'] }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ item['Name'] }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ item['Stock'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 
     <!-- Hidden settings list -->
@@ -84,23 +92,47 @@
     <!-- Hidden businesses list -->
     <div id="businessList" style="display: none; margin-top: 30px; text-align: center;">
         <h2 style="color: #FF9800;">Approved Businesses</h2>
-        <ul style="list-style-type: none; padding: 0; font-size: 16px;">
-            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Business Water Bottles - Approved</li>
-            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Business Wireless Earpods - Approved</li>
-            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Business C - Pending</li>
-            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Business D - Pending</li>
-        </ul>
+        <table border="1" style="margin: 0 auto; border-collapse: collapse; width: 80%; font-size: 16px;">
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th style="border: 1px solid #ddd; padding: 8px;">Business ID</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Business Name</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Owner</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for business in businesses %}
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ business['BusinessID'] }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ business['Name'] }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ business['Owner'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 
     <!-- Hidden drone list -->
     <div id="droneList" style="display: none; margin-top: 30px; text-align: center;">
         <h2 style="color: #673AB7;">Drone List</h2>
-        <ul style="list-style-type: none; padding: 0; font-size: 16px;">
-            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Drone for Customer - Location: Warehouse</li>
-            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Drone B - Location: In Transit</li>
-            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Drone C - Location: Maintenance</li>
-            <li style="padding: 10px; border-bottom: 1px solid #ddd;">Drone D - Location: Delivery Point</li>
-        </ul>
+        <table border="1" style="margin: 0 auto; border-collapse: collapse; width: 80%; font-size: 16px;">
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th style="border: 1px solid #ddd; padding: 8px;">Drone ID</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Drone Name</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for drone in drones %}
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ drone['DroneID'] }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ drone['Name'] }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ drone['Location'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -132,4 +164,6 @@
 </script>
 
 {% endblock %}
+
+
 
